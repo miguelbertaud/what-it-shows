@@ -14,20 +14,23 @@ signature: miguelbertaud
 
   const repo = 'https://github.com/miguelbertaud/what-it-shows/issues';
   const issues = { parser: `${repo}/1`, hint: `${repo}/2`, move: `${repo}/3` };
+  // From engineering's update on #4471 (closed 5 October).
+  const status = { parser: 'fixed', hint: "won't fix: booking-v3 retired", move: 'open' };
 </script>
 
 [#4471](/kb/incidents/4471) says one bug: the parser reads dates month first. The reports say
 three. They were merged on their subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
-and their subjects are the same whatever went wrong, so one fix will not close them all.
+and their subjects are the same whatever went wrong, so one fix could not close them all.
 
 <Callout kind="warn">
-The queued parser fix closes only the swapped dates in the first row. The other two problems
-need their own fixes, so each now has its own ticket.
+#4471 closed on 5 October. Engineering fixed the parser (<code>fix(dates): parse dd/mm for eu locales</code>)
+and retired the booking-v3 form, which ends the hint problem. Nobody has fixed the one-day move:
+it is still open.
 </Callout>
 
 ## What #4471 holds
 
-<ProblemTable ticket={4471} {issues} />
+<ProblemTable ticket={4471} {issues} {status} />
 
 ## How to tell them apart
 
@@ -48,6 +51,7 @@ need their own fixes, so each now has its own ticket.
 
 - Count a merged ticket by cause, not by subject. The intake tag is a guess from the reporter's
   browser and is wrong in both directions here.
-- Keep #4471 open until each of the three tickets is closed.
+- #4471 closed with one of its three problems still open. Keep the one-day move in its own
+  ticket until engineering finds it, and send new one-day reports there, not to #4471.
 
 <RenderStamp {signature} />

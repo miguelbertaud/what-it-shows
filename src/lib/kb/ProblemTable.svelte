@@ -5,8 +5,8 @@
   import { groupByProblem, PROBLEMS } from '#lib/kb/problems';
   import { tenantOf } from '#lib/kb/locales';
 
-  // issues: problem → link to the ticket that now owns it.
-  let { ticket, issues = {} }: { ticket: number; issues?: Record<string, string> } = $props();
+  // issues: problem → link to the ticket that now owns it. status: problem → what engineering did.
+  let { ticket, issues = {}, status = {} }: { ticket: number; issues?: Record<string, string>; status?: Record<string, string> } = $props();
 
   const merged = $derived(uniqueById(reports as Report[]).filter((r) => r.mergedInto === ticket));
   const groups = $derived(groupByProblem(merged, tenantOf, notes.oneDayMove));
@@ -25,7 +25,7 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>tenants</th><th>came in by</th><th>seen</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>reports</th><th>tenants</th><th>came in by</th><th>seen</th><th>ticket</th><th>status</th></tr>
   </thead>
   <tbody>
     {#each groups as g (g.problem)}
@@ -36,6 +36,7 @@
         <td class="tags">{channels(g)}</td>
         <td>{g.firstSeen} → {g.lastSeen}</td>
         <td>{#if issues[g.problem]}<a href={issues[g.problem]}>{issues[g.problem].split('/').slice(-3).join('/').replace('/issues/', '#')}</a>{:else}none yet{/if}</td>
+        <td>{status[g.problem] ?? 'open'}</td>
       </tr>
     {/each}
   </tbody>
