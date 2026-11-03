@@ -1,0 +1,53 @@
+---
+layout: runbook
+title: '#4471 · three problems, one ticket'
+owner: miguelbertaud
+status: open
+reviewed: 2026-11-02
+signature: miguelbertaud
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/miguelbertaud/what-it-shows/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, move: `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) says one bug: the parser reads dates month first. The reports say
+three. They were merged on their subject lines ([decision 0001](/kb/decisions/0001-dedupe-by-subject)),
+and their subjects are the same whatever went wrong, so one fix will not close them all.
+
+<Callout kind="warn">
+The queued parser fix closes only the first row. The other two need their own fixes, so each
+now has its own ticket.
+</Callout>
+
+## What #4471 holds
+
+<ProblemTable ticket={4471} {issues} />
+
+## How to tell them apart
+
+- **`parser`**: the day and month swap. A day-first tenant's date goes through the shared parser
+  and comes out month first: 7 April becomes 4 July. It reaches us through the app, email and
+  forms that print the tenant's own order.
+- **`hint`**: also a swap, but the parser is not to blame. booking-v3 prints `MM/DD/YYYY` under
+  its date field, people type what it tells them, and the form reads the date the tenant's way.
+  Only form reports from booking-v3 tenants. Fixing the parser does not touch it; fixing the
+  hint does.
+- **`move`**: not a swap. The date is one day off ("Tuesday 12 May, calendar says Monday 11 May"),
+  or two people in different cities see different days for one meeting. The desk already read
+  these apart ([desk notes](/kb/incidents/4471)); they were filed under `parser` only because of
+  their tenant. Day and month order cannot move a date by one day, so this is a third bug,
+  most likely in how the time zone is applied.
+
+## For the desk
+
+- Count a merged ticket by cause, not by subject. The intake tag is a guess from the reporter's
+  browser and is wrong in both directions here.
+- Keep #4471 open until each of the three tickets is closed.
+
+<RenderStamp {signature} />
