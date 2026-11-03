@@ -4,7 +4,7 @@ title: '#4471 · three problems, one ticket'
 owner: miguelbertaud
 status: open
 reviewed: 2026-11-02
-signature: miguelbertaud
+signature: v1.eyJzdWIiOiIyNDk3IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTM2NzIzMjAsImV4cCI6MTc5Mzc1ODcyMH0.k0barqNyMI0OXGt2DCUwPF-qQWeUkRa_pUV2IrddoFQ
 ---
 
 <script>
