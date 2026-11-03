@@ -30,7 +30,7 @@
   <tbody>
     {#each groups as g (g.problem)}
       <tr>
-        <td>{g.problem === 'unplaced' ? 'no tenant on file' : PROBLEMS[g.problem]} <code>{g.problem}</code></td>
+        <td>{PROBLEMS[g.problem]} <code>{g.problem}</code></td>
         <td>{g.reports.length}</td>
         <td>{g.tenants.length}</td>
         <td class="tags">{channels(g)}</td>
@@ -44,6 +44,9 @@
 {#each groups as g (g.problem)}
   {#if g.tenants.length < 6}
     <p class="note"><code>{g.problem}</code>: {g.tenants.join(', ')}.</p>
+  {/if}
+  {#if g.filedUnder.length}
+    <p class="note">The {g.reports.length} <code>{g.problem}</code> reports are also counted under <code>{g.filedUnder.join(', ')}</code>, where the desk files them.</p>
   {/if}
 {/each}
 

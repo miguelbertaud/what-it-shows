@@ -21,8 +21,8 @@ three. They were merged on their subject lines ([decision 0001](/kb/decisions/00
 and their subjects are the same whatever went wrong, so one fix will not close them all.
 
 <Callout kind="warn">
-The queued parser fix closes only the first row. The other two need their own fixes, so each
-now has its own ticket.
+The queued parser fix closes only the swapped dates in the first row. The other two problems
+need their own fixes, so each now has its own ticket.
 </Callout>
 
 ## What #4471 holds
@@ -40,9 +40,9 @@ now has its own ticket.
   hint does.
 - **`move`**: not a swap. The date is one day off ("Tuesday 12 May, calendar says Monday 11 May"),
   or two people in different cities see different days for one meeting. The desk already read
-  these apart ([desk notes](/kb/incidents/4471)); they were filed under `parser` only because of
-  their tenant. Day and month order cannot move a date by one day, so this is a third bug,
-  most likely in how the time zone is applied.
+  these apart ([desk notes](/kb/incidents/4471)) and counts them under `parser`, where they are
+  filed by tenant; the table counts them there too. Day and month order cannot move a date by
+  one day, so this is a third bug, most likely in how the time zone is applied.
 
 ## For the desk
 
